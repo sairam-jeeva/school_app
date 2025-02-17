@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/screens/academic_screens.dart';
+import 'package:school_app/screens/attendance_screen.dart';
+import 'package:school_app/screens/exams_screen.dart';
+import 'package:school_app/screens/other_screen.dart';
 
 class HomemainScreen extends StatefulWidget {
   const HomemainScreen({super.key});
@@ -21,7 +25,7 @@ class _HomemainScreenState extends State<HomemainScreen> {
               Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1D3557), 
+                  color: const Color(0xFF1D3557),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -68,12 +72,15 @@ class _HomemainScreenState extends State<HomemainScreen> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: [
-                  _buildActivityItem(Icons.school, "Academic"),
-                  _buildActivityItem(Icons.note, "Exams"),
-                  _buildActivityItem(Icons.checklist, "Attendance"),
-                  _buildActivityItem(Icons.calendar_today, "Timetable"),
-                  _buildActivityItem(Icons.receipt, "Reports"),
-                  _buildActivityItem(Icons.payment, "Fees"),
+                  _buildActivityItem(
+                      Icons.school, "Academic", const AcademicScreen()),
+                  _buildActivityItem(Icons.note, "Exams", const ExamScreen()),
+                  _buildActivityItem(
+                      Icons.checklist, "Attendance", const AttendanceScreen()),
+                  _buildActivityItem(
+                      Icons.calendar_today, "Timetable", TimeTableScreen()),
+                  _buildActivityItem(Icons.receipt, "Reports", ReportsScreen()),
+                  _buildActivityItem(Icons.payment, "Fees", FeesScreen()),
                 ],
               ),
               const SizedBox(height: 20),
@@ -118,21 +125,29 @@ class _HomemainScreenState extends State<HomemainScreen> {
     );
   }
 
-  Widget _buildActivityItem(IconData icon, String title) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(19)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 30, color: const Color(0xFF1D3557)),
-          const SizedBox(height: 5),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ],
+  Widget _buildActivityItem(IconData icon, String title, Widget page) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(19)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 30, color: const Color(0xFF1D3557)),
+            const SizedBox(height: 5),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
       ),
     );
   }
